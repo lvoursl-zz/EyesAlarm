@@ -12,9 +12,10 @@ TARGET = eyesAlarm
 TEMPLATE = app
 
 
-SOURCES += main.cpp\
-        remined.cpp
+SOURCES += main.cpp \
+    Reminder.cpp
 
-HEADERS  += remined.h
+HEADERS  += \
+    Reminder.h
 
-FORMS    += remined.ui
+FORMS    +=
