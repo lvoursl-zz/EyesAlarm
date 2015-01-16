@@ -4,24 +4,29 @@
 #include <QWidget>
 #include <QSystemTrayIcon>
 #include <QDebug>
+#include <QTimer>
 
 class Reminder : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Reminder(QWidget *parent = 0);
+    explicit Reminder(QWidget *parent = 0, int time = 0, QString text = "");
     ~Reminder();
 
 private :
-    int eyesAlarmTime;
     QString newTime;
     QSystemTrayIcon icon;
+    QString text;
+    QTimer timer;
+    int time;
 signals:
 
 public slots:
-    void show();
-    int getEyesAlarmTime() const;
-    void setEyesAlarmTime(int value);
+    void show(QString text = "Relax");
+    int getTime() const;
+    void setTime(int value);
+    void createNew(QString text, int time);
 };
+
 
 #endif // REMINDER_H

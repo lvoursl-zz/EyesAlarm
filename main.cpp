@@ -1,22 +1,22 @@
 #include "mainwindow.h"
 #include "reminder.h"
 #include <QApplication>
-#include <QTimer>
+#include <QVector>
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow window;
-    QTimer timer;
-    Reminder reminder;
-    timer.start(reminder.getEyesAlarmTime());
+    Reminder eyesReminder(NULL, 60000, "Eyes! Relax!");
 
-    QObject::connect(&timer, SIGNAL(timeout()),
-                     &reminder, SLOT(show()));
     QObject::connect(&window, SIGNAL(eyesAlarmTimeChanged(int)),
-                     &reminder, SLOT(setEyesAlarmTime(int)));
-    QObject::connect(&window, SIGNAL(eyesAlarmTimeChanged(int)),
-                     &timer, SLOT(start(int)));
+                     &eyesReminder, SLOT(setTime(int)));
+
+    QObject::connect(&window, SIGNAL(canCreateNewReminder(QString,int)),
+                     &eyesReminder, SLOT(createNew(QString, int)));
+
+    //Reminder reminder(NULL, 6 /**60000*/, "shit"); // thats ok
+
     window.show();
     return a.exec();
 }

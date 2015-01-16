@@ -27,6 +27,7 @@ void MainWindow::on_addReminderButton_clicked()
     newReminderTime = ui->newReminderTime->toPlainText().toInt();
     // ограничение по времени? ( 60 минут? )
     if ((!newReminderText.isEmpty()) && (newReminderTime != 0)) {
-        qDebug() << newReminderText << " " << newReminderTime;
+        emit canCreateNewReminder(newReminderText, newReminderTime /** 60000*/);
+        //Reminder *reminder = new Reminder(NULL, newReminderTime, newReminderText);
     }
 }

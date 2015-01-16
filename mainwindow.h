@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QDebug>
+#include "reminder.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,7 +19,7 @@ public:
 
 signals:
     void eyesAlarmTimeChanged(int newTime);
-
+    void canCreateNewReminder(QString text, int time);
 private slots:
     void on_setButton_clicked();
 
@@ -29,6 +30,7 @@ private:
     QString newTimeOfEyesAlarm;
     QString newReminderText;
     int newReminderTime;
+    QVector<Reminder> reminders;
 };
 
 #endif // MAINWINDOW_H

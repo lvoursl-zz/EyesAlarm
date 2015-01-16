@@ -1,32 +1,42 @@
 #include "reminder.h"
 
-Reminder::Reminder(QWidget *parent) : QWidget(parent)
+Reminder::Reminder(QWidget *parent, int time, QString text) : QWidget(parent)
 {
-    eyesAlarmTime = 600000; // 10 min
     icon.setIcon(QIcon("icon1.png"));
     icon.setVisible(true);
-    icon.show();
-    icon.showMessage("eyesAlarm", "Thanks for using!", icon.Warning, 20000);
+    icon.showMessage("eyesAlarm", text, icon.Warning, 20000);
+    timer.start(time);
+    this->text = text;
+    this->time = time;
+    QObject::connect(&timer, SIGNAL(timeout()),
+                     this, SLOT(show()));
+    qDebug() << this->text << this->time << " constructor";
 }
 
 Reminder::~Reminder()
 {
 
 }
-int Reminder::getEyesAlarmTime() const
+int Reminder::getTime() const
 {
-    return eyesAlarmTime;
+    return time;
 }
 
-void Reminder::setEyesAlarmTime(int value)
+void Reminder::setTime(int value)
 {
-    eyesAlarmTime = value;
+    time = value;
+    timer.start(time);
+    qDebug() << value;
 }
 
+void Reminder::show(QString text) {
+    icon.showMessage("eyesAlarm", this->text, icon.Warning, 20000);
+}
 
-void Reminder::show() {
-    qDebug()<< "show" << eyesAlarmTime;
-    icon.showMessage("eyesAlarm", "Relax!", icon.Warning, 20000);
+void Reminder::createNew(QString text, int time) {
+    Reminder *reminder = new Reminder(NULL, time, text);
+
+    qDebug() << text << time << "createnew";
 }
 
 
