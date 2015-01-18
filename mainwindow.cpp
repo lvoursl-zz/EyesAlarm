@@ -6,6 +6,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    labelYStep = 150;
+    newReminderId = 0;
 }
 
 MainWindow::~MainWindow()
@@ -25,9 +27,13 @@ void MainWindow::on_addReminderButton_clicked()
 {
     newReminderText = ui->newReminderText->toPlainText();
     newReminderTime = ui->newReminderTime->toPlainText().toInt();
-    // ограничение по времени? ( 60 минут? )
+    bool disposableReminder = ui->disposableReminder->isChecked();
+    // ограничение по времени напоминалки? ( 60 минут? )
     if ((!newReminderText.isEmpty()) && (newReminderTime != 0)) {
-        emit canCreateNewReminder(newReminderText, newReminderTime /** 60000*/);
-        //Reminder *reminder = new Reminder(NULL, newReminderTime, newReminderText);
+        Reminder *reminder = new Reminder(NULL, newReminderTime, newReminderText, disposableReminder);
+        QLabel *a = new QLabel(newReminderText, this);
+        a->move(20, labelYStep);
+        a->show();
+        labelYStep += 20;
     }
 }

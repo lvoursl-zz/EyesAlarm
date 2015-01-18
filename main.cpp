@@ -7,16 +7,12 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow window;
-    Reminder eyesReminder(NULL, 60000, "Eyes! Relax!");
+    Reminder eyesReminder(NULL, 60000, "Eyes! Relax!", false); // 60000 - 1 mimute
 
     QObject::connect(&window, SIGNAL(eyesAlarmTimeChanged(int)),
                      &eyesReminder, SLOT(setTime(int)));
 
-    QObject::connect(&window, SIGNAL(canCreateNewReminder(QString,int)),
-                     &eyesReminder, SLOT(createNew(QString, int)));
-
-    //Reminder reminder(NULL, 6 /**60000*/, "shit"); // thats ok
-
     window.show();
+    window.setFixedSize(436, 280);
     return a.exec();
 }

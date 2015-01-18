@@ -19,7 +19,6 @@ public:
 
 signals:
     void eyesAlarmTimeChanged(int newTime);
-    void canCreateNewReminder(QString text, int time);
 private slots:
     void on_setButton_clicked();
 
@@ -30,7 +29,10 @@ private:
     QString newTimeOfEyesAlarm;
     QString newReminderText;
     int newReminderTime;
-    QVector<Reminder> reminders;
+    int labelYStep;
+    int newReminderId;
+    bool disposableReminder;
+    QVector<int> remindersId;
 };
 
 #endif // MAINWINDOW_H

@@ -10,7 +10,7 @@ class Reminder : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Reminder(QWidget *parent = 0, int time = 0, QString text = "");
+    explicit Reminder(QWidget *parent = 0, int time = 0, QString text = "", bool disposable = true);
     ~Reminder();
 
 private :
@@ -19,13 +19,14 @@ private :
     QString text;
     QTimer timer;
     int time;
+    int id;
+    bool disposable;
 signals:
 
 public slots:
     void show(QString text = "Relax");
     int getTime() const;
     void setTime(int value);
-    void createNew(QString text, int time);
 };
 
 

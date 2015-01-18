@@ -1,6 +1,6 @@
 #include "reminder.h"
 
-Reminder::Reminder(QWidget *parent, int time, QString text) : QWidget(parent)
+Reminder::Reminder(QWidget *parent, int time, QString text, bool disposable) : QWidget(parent)
 {
     icon.setIcon(QIcon("icon1.png"));
     icon.setVisible(true);
@@ -10,7 +10,11 @@ Reminder::Reminder(QWidget *parent, int time, QString text) : QWidget(parent)
     this->time = time;
     QObject::connect(&timer, SIGNAL(timeout()),
                      this, SLOT(show()));
-    qDebug() << this->text << this->time << " constructor";
+    if (disposable) {
+        QObject::connect(&timer, SIGNAL(timeout()),
+                         &timer, SLOT(stop()));
+    }
+    qDebug() << this->text << this->time << " constructor" << disposable;
 }
 
 Reminder::~Reminder()
@@ -33,11 +37,6 @@ void Reminder::show(QString text) {
     icon.showMessage("eyesAlarm", this->text, icon.Warning, 20000);
 }
 
-void Reminder::createNew(QString text, int time) {
-    Reminder *reminder = new Reminder(NULL, time, text);
-
-    qDebug() << text << time << "createnew";
-}
 
 
 
