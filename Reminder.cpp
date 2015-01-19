@@ -2,9 +2,13 @@
 
 Reminder::Reminder(QWidget *parent, int time, QString text, bool disposable) : QWidget(parent)
 {
-    icon.setIcon(QIcon("icon1.png"));
-    icon.setVisible(true);
-    icon.showMessage("eyesAlarm", text, icon.Warning, 20000);
+    if (icon.isVisible() == false) {
+        /* if started first time */
+        icon.setIcon(QIcon(":/img/icon.png"));
+        icon.setVisible(true);
+        icon.show();
+        icon.showMessage("eyesAlarm", "Welcome!", icon.Warning, 20000);
+    }
     timer.start(time);
     this->text = text;
     this->time = time;

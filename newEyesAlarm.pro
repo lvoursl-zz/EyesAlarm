@@ -20,3 +20,6 @@ HEADERS  += mainwindow.h \
     reminder.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    res.qrc

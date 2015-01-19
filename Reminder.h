@@ -6,6 +6,8 @@
 #include <QDebug>
 #include <QTimer>
 
+static QSystemTrayIcon icon;
+
 class Reminder : public QWidget
 {
     Q_OBJECT
@@ -15,7 +17,6 @@ public:
 
 private :
     QString newTime;
-    QSystemTrayIcon icon;
     QString text;
     QTimer timer;
     int time;
