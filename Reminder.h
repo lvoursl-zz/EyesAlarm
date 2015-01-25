@@ -5,6 +5,10 @@
 #include <QSystemTrayIcon>
 #include <QDebug>
 #include <QTimer>
+#include <QMenu>
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 static QSystemTrayIcon icon;
 
@@ -12,8 +16,9 @@ class Reminder : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Reminder(QWidget *parent = 0, int time = 0, QString text = "", bool disposable = true);
+    explicit Reminder(QWidget *parent = 0, int time = 0, QString text = "", bool disposable = true, int id = 0);
     ~Reminder();
+    void createIconMenu();
 
 private :
     QString newTime;
@@ -23,11 +28,12 @@ private :
     int id;
     bool disposable;
 signals:
-
+    void quit();
 public slots:
     void show(QString text = "Relax");
     int getTime() const;
     void setTime(int value);
+    void quitButtonClicked();
 };
 
 
