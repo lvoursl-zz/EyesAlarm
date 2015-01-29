@@ -8,7 +8,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow window;
-    Reminder eyesReminder(NULL, 60000, "Eyes! Relax!", false, 0); // 60000 - 1 mimute
+    Reminder eyesReminder(NULL, 3, "Eyes! Relax!", false, 0);
 
     QObject::connect(&window, SIGNAL(eyesAlarmTimeChanged(int)),
                      &eyesReminder, SLOT(setTime(int)));

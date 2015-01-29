@@ -7,6 +7,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     labelYStep = 150;
+
+    // thats for taken last id from json file
+    /*QFile remindersFile("reminders.json");
+    QByteArray remindersData = remindersFile.readAll();
+    QJsonDocument remindersInJSON(QJsonDocument::fromJson(remindersData));*/
+
     newReminderId = 1;
 }
 
@@ -19,7 +25,7 @@ void MainWindow::on_setButton_clicked()
 {
    newTimeOfEyesAlarm = ui->eyesAlarmTimeEdit->toPlainText();
    if ((!newTimeOfEyesAlarm.isEmpty()) && (newTimeOfEyesAlarm.toInt() > 0) && (newTimeOfEyesAlarm.toInt() < 60)) {
-       emit eyesAlarmTimeChanged(newTimeOfEyesAlarm.toInt() * 60000); // *60000 = conversion to minutes
+       emit eyesAlarmTimeChanged(newTimeOfEyesAlarm.toInt());
    }
 }
 
@@ -30,19 +36,14 @@ void MainWindow::on_addReminderButton_clicked()
     bool disposableReminder = ui->disposableReminder->isChecked();
 
     if ((!newReminderText.isEmpty()) && (newReminderTime > 0)) {
-        QFile remindersFile("reminders.json");
-
-        if (remindersFile.open(QIODevice::ReadOnly)) {
-            QByteArray remindersData = remindersFile.readAll();
-            QJsonDocument remindersInJSON(QJsonDocument::fromJson(remindersData));
-
-            Reminder *reminder = new Reminder(NULL, newReminderTime, newReminderText, disposableReminder, newReminderId);
-            newReminderId++;
-            QLabel *a = new QLabel(newReminderText, this);
-            a->move(20, labelYStep);
-            a->show();
-            labelYStep += 20;
-        }
+        Reminder *reminder = new Reminder(NULL, newReminderTime, newReminderText, disposableReminder, newReminderId);
+        newReminderId++;
+        QString labelText = newReminderText + ";   remind time: " + ui->newReminderTime->toPlainText() + " (minutes)";
+        QLabel *a = new QLabel(labelText, this);
+        a->setFixedSize(400, 25);
+        a->move(20, labelYStep);
+        a->show();
+        labelYStep += 25;
     }
 }
 

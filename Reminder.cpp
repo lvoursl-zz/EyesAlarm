@@ -9,25 +9,34 @@ Reminder::Reminder(QWidget *parent, int time, QString text, bool disposable, int
         icon.show();
         icon.showMessage("eyesAlarm", "Welcome!", icon.Warning, 20000);
     }
-    timer.start(time);
+    QDate d;
+    QTime t;
+    //d.setDate(getTime());
+    qDebug() << d.currentDate() << t.currentTime();
 
     this->text = text;
-    this->time = time;
+    this->time = time * 60000;
     this->id = id;
+    this->disposable = disposable;
+
+    timer.start(this->time);
+
 
     QObject::connect(&timer, SIGNAL(timeout()),
                      this, SLOT(show()));
+
     if (disposable) {
         QObject::connect(&timer, SIGNAL(timeout()),
                          &timer, SLOT(stop()));
     }
+
     if (id > 0) {
         QFile dataFile("reminders.json");
         QJsonObject reminder;
-        reminder["id"] = id;
-        reminder["text"] = text;
-        reminder["time"] = time;
-        reminder["disposable"] = disposable;
+        reminder["id"] = this->id;
+        reminder["text"] = this->text;
+        reminder["time"] = this->time;
+        reminder["disposable"] = this->disposable;
         QJsonDocument saveReminder(reminder);
         if (dataFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
             dataFile.write(saveReminder.toJson());

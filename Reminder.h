@@ -9,6 +9,8 @@
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QDate>
+#include <QTime>
 
 static QSystemTrayIcon icon;
 
