@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>img/icon.png</file>
-        <file>reminders.txt</file>
+        <file>eyesalarm.txt</file>
         <file>reminders.json</file>
     </qresource>
 </RCC>

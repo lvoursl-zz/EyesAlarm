@@ -8,7 +8,16 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow window;
-    Reminder eyesReminder(NULL, 3, "Eyes! Relax!", false, 0);
+    QFile eyesAlarmTimeFile("eyesalarm.txt");
+    QTextStream eyesAlarmTimeStream(&eyesAlarmTimeFile);
+    int eyesAlarmTimeInFile;
+
+    if (eyesAlarmTimeFile.open(QIODevice::ReadWrite)) {
+        eyesAlarmTimeStream >> eyesAlarmTimeInFile;
+        eyesAlarmTimeFile.close();
+    }
+
+    Reminder eyesReminder(eyesAlarmTimeInFile, "Eyes! Relax!", false, -1, &window);
 
     QObject::connect(&window, SIGNAL(eyesAlarmTimeChanged(int)),
                      &eyesReminder, SLOT(setTime(int)));

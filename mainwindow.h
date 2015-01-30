@@ -1,8 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
-#include <QDebug>
 #include "reminder.h"
 
 namespace Ui {
@@ -21,18 +19,17 @@ signals:
     void eyesAlarmTimeChanged(int newTime);
 private slots:
     void on_setButton_clicked();
-
     void on_addReminderButton_clicked();
+    void updateReminders(int id);
 
 private:
     Ui::MainWindow *ui;
     QString newTimeOfEyesAlarm;
     QString newReminderText;
     int newReminderTime;
-    int labelYStep;
     int newReminderId;
     bool disposableReminder;
-    QVector<int> remindersId;
+    QList<Reminder*> remindersList;
 };
 
 #endif // MAINWINDOW_H
