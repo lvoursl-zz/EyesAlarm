@@ -15,14 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
         QJsonDocument remindersInJSON(QJsonDocument::fromJson(remindersData));
         QJsonObject remindersObject = remindersInJSON.object();
         QJsonArray remindersArray = remindersObject["id"].toArray();
-//qDebug() << remindersInJSON.array();
-
-        //for (int i = 0; i < remindersArray.size(); i++) qDebug() << remindersArray[i];
-       // remindersList = new QList<Reminder>;
+        //qDebug() << remindersInJSON.array();
     }
-
-    //newReminderId = 1;
-    //qDebug() << remindersList.length();
 }
 
 MainWindow::~MainWindow()
@@ -58,7 +52,6 @@ void MainWindow::on_addReminderButton_clicked()
                                           disposableReminder, newReminderId, this);
         remindersList.push_back(reminder);
         QObject::connect(reminder, SIGNAL(reminderDeleted(int)), this, SLOT(updateReminders(int)));
-     //   qDebug() << remindersList.length();
     }
 }
 
@@ -66,7 +59,7 @@ void MainWindow::updateReminders(int id)
 {
     qDebug() << "id:" << id;
     qDebug() << "length: " << remindersList.length();
-
+    remindersList.removeAt(id);
     Reminder *r;
     for (int i = id; i < remindersList.length(); i++) {
         r = remindersList.at(i);
@@ -74,11 +67,7 @@ void MainWindow::updateReminders(int id)
         r->getReminderLabel()->move(20, r->getY() - 25);
         r->getDeleteReminderButton()->move(330, r->getY() - 25);
         r->setY(r->getY() - 25);
-
-        labelYstep = r->getY() - 50;
-        qDebug() << labelYstep;
     }
-    remindersList.removeAt(id);
 
 }
 

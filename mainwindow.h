@@ -7,6 +7,8 @@ namespace Ui {
 class MainWindow;
 }
 
+extern int labelYstep;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT

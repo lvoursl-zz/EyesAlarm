@@ -11,14 +11,11 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
-#include <QDate>
-#include <QTime>
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
 
 static QSystemTrayIcon icon;
-static int labelYstep = 150;
 
 class Reminder : public QWidget
 {
@@ -47,9 +44,8 @@ private :
     QTimer timer;
     int time;
     int id;
-    int y;
+    int y = 150;
     bool disposable;
-
     QLabel *reminderLabel;
     QPushButton *deleteReminderButton;
 signals:

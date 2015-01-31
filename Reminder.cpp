@@ -1,5 +1,5 @@
 #include "reminder.h"
-
+extern int labelYstep;
 Reminder::Reminder(int time, QString text,
                    bool disposable, int id, QMainWindow *w, QWidget *parent) : QWidget(parent)
 {
@@ -11,11 +11,7 @@ Reminder::Reminder(int time, QString text,
         icon.showMessage("eyesAlarm", "Welcome!", icon.Warning, 20000);
     }
 
-    //QDate d;
-    //QTime t;
-    //d.setDate(getTime());
-    //qDebug() << d.currentDate() << t.currentTime();
-
+    this->y += id * 25;
     this->text = text;
     this->time = time * 60000;
     this->id = id;
@@ -39,20 +35,20 @@ Reminder::Reminder(int time, QString text,
         QString labelText = text + ";   remind time:  " + QString::number(time) + " (minutes)";
         reminderLabel = new QLabel(labelText, w);
         reminderLabel->setFixedSize(400, 25);
-        reminderLabel->move(20, labelYstep);
+        reminderLabel->move(20, this->y);
         reminderLabel->show();
 
         /* button to delete reminder */
         deleteReminderButton = new QPushButton("delete", w);
-        deleteReminderButton->move(330, labelYstep);
+        deleteReminderButton->move(330, this->y);
         deleteReminderButton->setFixedSize(75, 30);
         deleteReminderButton->show();
 
-        this->y = labelYstep;
+        //this->y = labelYstep;
 
         QObject::connect(deleteReminderButton, SIGNAL(clicked()), this, SLOT(deleteLater()));
 
-        labelYstep += 25;
+        //labelYstep += 25;
         /* save reminder to json file */
   /*      QFile dataFile("reminders.json");
         QJsonObject reminder;
