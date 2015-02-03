@@ -8,14 +8,13 @@
 #include <QTimer>
 #include <QMenu>
 #include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QJsonArray>
 #include <QMainWindow>
 #include <QLabel>
 #include <QPushButton>
+#include <QCloseEvent>
 
 static QSystemTrayIcon icon;
+const int widgetsYsize = 50;
 
 class Reminder : public QWidget
 {
@@ -50,12 +49,14 @@ private :
     QPushButton *deleteReminderButton;
 signals:
     void quit();
+    void open(bool);
     void reminderDeleted(int id);
 public slots:
     void show(QString text = "Relax");
     int getTime() const;
     void setTime(int value);
     void quitButtonClicked();
+    void openButtonClicked();
 };
 
 

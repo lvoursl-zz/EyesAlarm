@@ -7,16 +7,6 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    /* thats for taken last id from json file */
-    QFile remindersFile("reminders.json");
-    if (remindersFile.open(QIODevice::ReadOnly)) {
-        // сделать отдельный фаил, где хранится ИД, и здесь читать из него значение, затем присваивая его newReminderId
-        QByteArray remindersData = remindersFile.readAll();
-        QJsonDocument remindersInJSON(QJsonDocument::fromJson(remindersData));
-        QJsonObject remindersObject = remindersInJSON.object();
-        QJsonArray remindersArray = remindersObject["id"].toArray();
-        //qDebug() << remindersInJSON.array();
-    }
 }
 
 MainWindow::~MainWindow()
@@ -28,7 +18,7 @@ void MainWindow::on_setButton_clicked()
 {
    newTimeOfEyesAlarm = ui->eyesAlarmTimeEdit->toPlainText();
    if ((!newTimeOfEyesAlarm.isEmpty()) && (newTimeOfEyesAlarm.toInt() > 0) && (newTimeOfEyesAlarm.toInt() < 60)) {
-       // writing for file
+       // writing for file time, that user set to eyesReminder
        QFile eyesAlarmTimeFile("eyesalarm.txt");
        if (eyesAlarmTimeFile.open(QIODevice::ReadWrite)) {
            QTextStream eyesAlarmTimeStream(&eyesAlarmTimeFile);
@@ -52,6 +42,11 @@ void MainWindow::on_addReminderButton_clicked()
                                           disposableReminder, newReminderId, this);
         remindersList.push_back(reminder);
         QObject::connect(reminder, SIGNAL(reminderDeleted(int)), this, SLOT(updateReminders(int)));
+        if (remindersList.length() < 6) {
+            this->setFixedSize(436, 280);
+        } else {
+            this->setFixedSize(436, this->height() + 25);
+        }
     }
 }
 
@@ -59,6 +54,10 @@ void MainWindow::updateReminders(int id)
 {
     qDebug() << "id:" << id;
     qDebug() << "length: " << remindersList.length();
+    if (remindersList.length() >= 6) {
+        this->setFixedSize(436, this->height() - 25);
+    }
+
     remindersList.removeAt(id);
     Reminder *r;
     for (int i = id; i < remindersList.length(); i++) {
@@ -68,7 +67,11 @@ void MainWindow::updateReminders(int id)
         r->getDeleteReminderButton()->move(330, r->getY() - 25);
         r->setY(r->getY() - 25);
     }
+}
 
+void MainWindow::closeEvent(QCloseEvent *event) {
+    event->ignore();
+    this->setVisible(false);
 }
 
 

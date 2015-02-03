@@ -7,7 +7,6 @@ namespace Ui {
 class MainWindow;
 }
 
-extern int labelYstep;
 
 class MainWindow : public QMainWindow
 {
@@ -32,6 +31,8 @@ private:
     int newReminderId;
     bool disposableReminder;
     QList<Reminder*> remindersList;
+
+    void closeEvent(QCloseEvent *event);
 };
 
 #endif // MAINWINDOW_H

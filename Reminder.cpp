@@ -1,5 +1,5 @@
 #include "reminder.h"
-extern int labelYstep;
+
 Reminder::Reminder(int time, QString text,
                    bool disposable, int id, QMainWindow *w, QWidget *parent) : QWidget(parent)
 {
@@ -34,9 +34,10 @@ Reminder::Reminder(int time, QString text,
         /* label with reminder text */
         QString labelText = text + ";   remind time:  " + QString::number(time) + " (minutes)";
         reminderLabel = new QLabel(labelText, w);
-        reminderLabel->setFixedSize(400, 25);
+        reminderLabel->setWordWrap(true);
+        reminderLabel->setFixedSize(280, 25);
         reminderLabel->move(20, this->y);
-        reminderLabel->show();
+        reminderLabel->show();        
 
         /* button to delete reminder */
         deleteReminderButton = new QPushButton("delete", w);
@@ -44,40 +45,29 @@ Reminder::Reminder(int time, QString text,
         deleteReminderButton->setFixedSize(75, 30);
         deleteReminderButton->show();
 
-        //this->y = labelYstep;
-
         QObject::connect(deleteReminderButton, SIGNAL(clicked()), this, SLOT(deleteLater()));
-
-        //labelYstep += 25;
-        /* save reminder to json file */
-  /*      QFile dataFile("reminders.json");
-        QJsonObject reminder;
-        reminder["id"] = this->id;
-        reminder["text"] = this->text;
-        reminder["time"] = this->time;
-        reminder["disposable"] = this->disposable;
-        QJsonDocument saveReminder(reminder);
-        if (dataFile.open(QIODevice::WriteOnly | QIODevice::Append)) {
-            dataFile.write(saveReminder.toJson());
-        }*/
     }
 
 }
 
 Reminder::~Reminder()
 {
-    qDebug() << "i am here";
-    reminderLabel->deleteLater();
-    deleteReminderButton->deleteLater();
-    emit reminderDeleted(this->id);
+    /* thats for ignore eyesReminder */
+    if (this->id != -1) {
+        delete reminderLabel;
+        delete deleteReminderButton;
+        emit reminderDeleted(this->id);
+    }
 }
 
 void Reminder::createIconMenu()
 {
     QMenu *iconMenu = new QMenu();
     QAction *quit = new QAction("Quit", this);
-    iconMenu->addSeparator();
+    QAction *open = new QAction("Open", this);
+    iconMenu->addAction(open);
     iconMenu->addAction(quit);
+    QObject::connect(open, SIGNAL(triggered()), this, SLOT(openButtonClicked()));
     QObject::connect(quit, SIGNAL(triggered()), this, SLOT(quitButtonClicked()));
     icon.setContextMenu(iconMenu);
 }
@@ -118,10 +108,6 @@ void Reminder::setId(int value)
     id = value;
 }
 
-
-
-
-
 int Reminder::getTime() const
 {
     return time;
@@ -140,6 +126,11 @@ void Reminder::show(QString text) {
 
 void Reminder::quitButtonClicked() {
     emit quit();
+}
+
+void Reminder::openButtonClicked() {
+    qDebug() << "emit";
+    emit open(true);
 }
 
 

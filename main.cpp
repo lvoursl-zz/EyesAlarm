@@ -8,6 +8,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     MainWindow window;
+
+    /* for restore time, that user set to eyesReminder */
     QFile eyesAlarmTimeFile("eyesalarm.txt");
     QTextStream eyesAlarmTimeStream(&eyesAlarmTimeFile);
     int eyesAlarmTimeInFile;
@@ -23,6 +25,7 @@ int main(int argc, char *argv[])
                      &eyesReminder, SLOT(setTime(int)));
 
     QObject::connect(&eyesReminder, SIGNAL(quit()), &a, SLOT(quit()));
+    QObject::connect(&eyesReminder, SIGNAL(open(bool)), &window, SLOT(showNormal()));
 
     eyesReminder.createIconMenu();
     window.setFixedSize(436, 280);
