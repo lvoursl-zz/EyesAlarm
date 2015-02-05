@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     /* for restore time, that user set to eyesReminder */
     QFile eyesAlarmTimeFile("eyesalarm.txt");
     QTextStream eyesAlarmTimeStream(&eyesAlarmTimeFile);
-    int eyesAlarmTimeInFile;
+    int eyesAlarmTimeInFile = 1;
 
     if (eyesAlarmTimeFile.open(QIODevice::ReadWrite)) {
         eyesAlarmTimeStream >> eyesAlarmTimeInFile;
@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     eyesReminder.createIconMenu();
     window.setFixedSize(436, 280);
     window.setWindowIcon(QIcon(":/img/icon.png"));
+    window.setWindowTitle("eyesAlarm");
     window.show();
     return a.exec();
 }

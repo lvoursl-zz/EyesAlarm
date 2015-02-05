@@ -32,7 +32,7 @@ Reminder::Reminder(int time, QString text,
 
     if (id > -1) {
         /* label with reminder text */
-        QString labelText = text + ";   remind time:  " + QString::number(time) + " (minutes)";
+        QString labelText = text + ";  remind time:  " + QString::number(time) + " (minutes)";
         reminderLabel = new QLabel(labelText, w);
         reminderLabel->setWordWrap(true);
         reminderLabel->setFixedSize(280, 25);
