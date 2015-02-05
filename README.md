@@ -1,7 +1,5 @@
-eyesAlarm
+eyesAlarm (with Qt + C++)
 =========
-
-Qt + C++
 
 Программа, позволяющая создавать свои напоминания с таймерами, одноразовые и интервальные.
 Встроен 1 неудаляемый таймер, напоминающий о отдыхе глаз. Время этого таймера можно изменять по своему удобству.
@@ -10,8 +8,8 @@ Qt + C++
 
 Несколько скриншотов:
 
-![interface](https://github.com/lvoursl/eyesAlarm/img/forReadme/reminder.png "interface")
-![interface](https://github.com/lvoursl/eyesAlarm/img/forReadme/reminder1.png "interface")
-![tray](https://github.com/lvoursl/eyesAlarm/img/forReadme/reminder2.png "icon in tray")
+![](https://github.com/lvoursl/eyesAlarm/blob/master/img/forReadme/reminder.png "interface")
+![](https://github.com/lvoursl/eyesAlarm/blob/master/img/forReadme/reminder1.png "interface")
+![](https://github.com/lvoursl/eyesAlarm/blob/master/img/forReadme/reminder2.png "icon in tray")
 
 // когда-нибудь тут будет описание на английском, да-да :-)
